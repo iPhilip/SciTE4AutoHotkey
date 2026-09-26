@@ -1,8 +1,15 @@
 ﻿; Highlights the active tab in the SciTE4AutoHotkey window.
 ; Intended to start with Windows and remain running until shutdown.
 ;
-; Known limitation: When a file is modified, SciTE appends an asterisk (*)
-; to its tab name. The asterisk is not highlighted until the tab is reselected.
+; Known limitations:
+;
+; 1. When a file is modified, SciTE appends an asterisk (*) to its tab name.
+;    The asterisk is not highlighted until the tab is reselected.
+;
+; 2. When a file is saved under a different name using the File:Save As... menu item,
+;    the highted area doesn't change. The area is adjusted as soon as the tab is reselected.
+;
+; Both limitations can be managed using the Shift+F5 hotkey.
 
 #Requires AutoHotkey v2.0
 #Include <UIA>  ; https://github.com/Descolada/UIA-v2
@@ -118,3 +125,9 @@ class WinEvents
       CallbackFree(this.pWinEventProc)
    }
 }
+
+; Hotkey
+
+#HotIf WinActive('ahk_class SciTEWindow')
++F5::HighlightSelectedTab()
+#HotIf
