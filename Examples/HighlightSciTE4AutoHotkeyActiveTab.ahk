@@ -37,8 +37,8 @@ WinSetTransparent Transparency, HighlightGui
 SciTEWindow := UIA.ElementFromHandle(hWin)
 TabControls := SciTEWindow.FindElements({Type:'Tab'})
 
-if TabControls.Length > 1 {
-   SelectedTab := TabControls.FindElement({Type:'TabItem', SelectionItemIsSelected:true})
+if TabControls.Length {
+   SelectedTab := SciTEWindow.FindElement({Type:'TabItem', SelectionItemIsSelected:true})
    HighlightSelectedTab()
 }
 
