@@ -1,0 +1,34 @@
+name: Sync SplashText
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  repository_dispatch:
+    types: [splashtext-updated]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout SciTE4AutoHotkey
+        uses: actions/checkout@v4
+
+      - name: Download SplashText.ahk
+        run: |
+          curl -L "https://raw.githubusercontent.com/iPhilip/SplashText/main/Lib/SplashText.ahk" \
+          -o Lib/SplashText.ahk
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Lib/SplashText.ahk
+          git diff --cached --quiet || git commit -m "Sync SplashText.ahk from SplashText repo"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
