@@ -1,5 +1,5 @@
 ﻿#Requires AutoHotkey v2.0
-#Include <RemoteBuffer_Class>  ; https://github.com/iPhilip/RemoteBuffer
+#Include RemoteBuffer_Class.ahk  ; https://github.com/iPhilip/RemoteBuffer
 
 ; ----------------------------------------------------------------------------------------------------------------
 ; SciFindText(hCtrl, SearchText, SearchFlags?, StartPos?, &EndPos?)

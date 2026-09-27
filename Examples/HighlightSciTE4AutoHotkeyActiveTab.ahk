@@ -12,7 +12,7 @@
 ; Both limitations can be managed using the Shift+F5 hotkey.
 
 #Requires AutoHotkey v2.0
-#Include <UIA>  ; https://github.com/Descolada/UIA-v2
+#Include ..\Lib\UIA.ahk  ; https://github.com/Descolada/UIA-v2
 Persistent
 
 Color := 'Gray'      ; Color of the highlight window (https://www.autohotkey.com/docs/v2/lib/Gui.htm#BackColor)

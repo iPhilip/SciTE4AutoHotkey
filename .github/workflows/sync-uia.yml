@@ -1,0 +1,32 @@
+name: Sync UIA
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # runs every Sunday at midnight
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout SciTE4AutoHotkey
+        uses: actions/checkout@v4
+
+      - name: Download UIA.ahk
+        run: |
+          curl -L "https://raw.githubusercontent.com/Descolada/UIA-v2/main/Lib/UIA.ahk" \
+          -o Lib/UIA.ahk
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Lib/UIA.ahk
+          git diff --cached --quiet || git commit -m "Sync UIA.ahk from Descolada/UIA-v2"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
