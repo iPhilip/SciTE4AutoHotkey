@@ -3,7 +3,7 @@
 
 #HotIf WinActive('ahk_class SciTEWindow')
 
-; --------------------
+; --------------------------------------------------------------------------------------------------
 ; Search all tabs for the specified text.
 ; If text is selected, it is used as the default value for the InputBox.
 ; Overrides the Find in Files... built-in hotkey (Ctrl+Shift+F).
@@ -18,6 +18,7 @@
 ; If the Options string is not included, the search is case-insensitive.
 ; The '<Options>' string will be stripped before the search is executed.
 ; See https://scintilla.org/ScintillaDoc.html#searchFlags for more details.
+; --------------------------------------------------------------------------------------------------
 
 ^+f::
 {
@@ -41,4 +42,15 @@
          SearchAllSciTE4AutoHotkeyTabs(Text, Flags)
    }
    A_Clipboard := C_Clipboard
+}
+
+; Copy any selected text to the clipboard.
+; A string containing the previous clipboard text is returned in the first parameter.
+
+CopyTextToClipboard(&PrevClipboard?, Timeout := 0.1)
+{
+   PrevClipboard := A_Clipboard
+   A_Clipboard := ''
+   Send '^c'
+   return ClipWait(Timeout)
 }

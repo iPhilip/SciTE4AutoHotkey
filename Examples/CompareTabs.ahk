@@ -1,12 +1,13 @@
 ﻿#Requires AutoHotkey v2.0
-#Include <SplashText>
+#Include <SplashText>  ; https://github.com/iPhilip/SplashText
 
 #HotIf WinActive('ahk_class SciTEWindow')
 
-; --------------------
+; --------------------------------------------------------------------------------------------------
 ; Compare two files opened in Scite4AutoHotkey.
 ; Requires kdiff3.exe to be installed in the C:\Program Files\KDiff3 folder.
 ; Homepage: http://kdiff3.sourceforge.net/
+; --------------------------------------------------------------------------------------------------
 
 ^+c::
 {
