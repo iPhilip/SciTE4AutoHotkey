@@ -1,5 +1,8 @@
-﻿; Highlights the active tab in the SciTE4AutoHotkey window.
+﻿; ------------------------------------------------------------------------------
+; Highlights the active tab in the SciTE4AutoHotkey window.
 ; Intended to start with Windows and remain running until shutdown.
+;
+; Author: iPhilip
 ;
 ; Known limitations:
 ;
@@ -7,9 +10,10 @@
 ;    The asterisk is not highlighted until the tab is reselected.
 ;
 ; 2. When a file is saved under a different name using the File:Save As... menu item,
-;    the highted area doesn't change. The area is adjusted as soon as the tab is reselected.
+;    the tab width may change but the highlighted area doesn't until the tab is reselected.
 ;
-; Both limitations can be managed using the Shift+F5 hotkey.
+; Both limitations can be managed manually by refreshing the highlighted area with the Shift+F5 hotkey.
+; ------------------------------------------------------------------------------
 
 #Requires AutoHotkey v2.0
 #Include ..\Lib\UIA.ahk  ; https://github.com/Descolada/UIA-v2
