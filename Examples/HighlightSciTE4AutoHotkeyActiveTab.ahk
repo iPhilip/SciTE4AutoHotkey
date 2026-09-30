@@ -39,9 +39,8 @@ WinSetTransparent Transparency, HighlightGui
 ; Highlight the active tab if the window has more than one tab.
 
 SciTEWindow := UIA.ElementFromHandle(hWin)
-TabControls := SciTEWindow.FindElements({Type:'Tab'})
 
-if TabControls.Length {
+if WindowHasTabControl() {
    SelectedTab := SciTEWindow.FindElement({Type:'TabItem', SelectionItemIsSelected:true})
    HighlightSelectedTab()
 }
@@ -103,14 +102,18 @@ WatchWindowClose(hWinEventHook, Event, hwnd, IdObject, IdChild, *) {
    }
 }
 
-; Helper function and class
+; Helper functions and class
 
 HighlightSelectedTab() {
+   if !IsSet(SelectedTab) && WindowHasTabControl()
+      global SelectedTab := SciTEWindow.FindElement({Type:'TabItem', SelectionItemIsSelected:true})
    if IsSet(SelectedTab) {
       TabRect := SelectedTab.BoundingRectangle
       HighlightGui.Show('x' TabRect.l ' y' TabRect.t ' w' (TabRect.r - TabRect.l) ' h' (TabRect.b - TabRect.t) ' NA')
    }
 }
+
+WindowHasTabControl() => SciTEWindow.FindElements({Type:'Tab'}).Length
 
 class WinEvents
 {
