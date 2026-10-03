@@ -7,12 +7,16 @@
 ; Known limitations:
 ;
 ; 1. When a file is modified, SciTE appends an asterisk (*) to its tab name.
-;    The asterisk is not highlighted until the tab is reselected.
+;    The asterisk is won't be highlighted.
 ;
 ; 2. When a file is saved under a different name using the File:Save As... menu item,
-;    the tab width may change but the highlighted area doesn't until the tab is reselected.
+;    the tab width may change but the highlighted area won't.
 ;
-; Both limitations can be managed manually by refreshing the highlighted area with the Shift+F5 hotkey.
+; 3. When the tab control is full (20 files) and a new file is opened, the width of the
+;    active tab may change but the highlighted area won't.
+;
+; The above limitations can be managed manually by refreshing the highlighted area
+; with the hotkey (Ctrl+F5) or by selecting another tab and reselecting the current tab.
 ; ------------------------------------------------------------------------------
 
 #Requires AutoHotkey v2.0
@@ -95,8 +99,7 @@ Events.Push(WinEvents(EVENT_OBJECT_DESTROY, EVENT_OBJECT_DESTROY, WatchWindowClo
 
 WatchWindowClose(hWinEventHook, Event, hwnd, IdObject, IdChild, *) {
    if hwnd = hWin && IdObject = OBJID_WINDOW && IdChild = CHILDID_SELF {
-      WinWaitClose(hwnd)
-      UIA.RemoveAutomationEventHandler(Handler, SciTEWindow, UIA.Event.SelectionItem_ElementSelected)
+      UIA.RemoveAllEventHandlers()
       global Events := ''
       Reload
    }
@@ -137,5 +140,5 @@ class WinEvents
 ; Hotkey
 
 #HotIf WinActive('ahk_class SciTEWindow')
-+F5::HighlightSelectedTab()
+^F5::HighlightSelectedTab()
 #HotIf
